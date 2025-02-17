@@ -17,3 +17,7 @@ $imagePublisher = "MicrosoftWindowsServer"
 $imageOffer = "WindowsServer"
 $imageSku = "2022-datacenter"
 $osDiskName = "$vmName-OSDisk"
+
+# Step 3: Create Resource Group
+New-AzResourceGroup -Name $resourceGroup -Location $location
+Write-Host "Resource Group Created: $resourceGroup"
