@@ -21,3 +21,7 @@ $osDiskName = "$vmName-OSDisk"
 # Step 3: Create Resource Group
 New-AzResourceGroup -Name $resourceGroup -Location $location
 Write-Host "Resource Group Created: $resourceGroup"
+
+# Step 4: Create Virtual Network & Subnet (Fixed)
+$vnet = New-AzVirtualNetwork -ResourceGroupName $resourceGroup -Location $location `
+    -Name $vnetName -AddressPrefix "10.0.0.0/16"
