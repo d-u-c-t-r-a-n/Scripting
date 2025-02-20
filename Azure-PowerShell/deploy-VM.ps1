@@ -23,8 +23,7 @@ New-AzResourceGroup -Name $resourceGroup -Location $location
 Write-Host "Resource Group Created: $resourceGroup"
 
 # Step 4: Create Virtual Network & Subnet (Fixed)
-$vnet = New-AzVirtualNetwork -ResourceGroupName $resourceGroup -Location $location `
-    -Name $vnetName -AddressPrefix "10.0.0.0/16"
+$vnet = New-AzVirtualNetwork -ResourceGroupName $resourceGroup -Location $location -Name $vnetName -AddressPrefix "10.0.0.0/16"
 
 $vnet = Set-AzVirtualNetwork -VirtualNetwork $vnet
 
@@ -35,3 +34,7 @@ $vnet | Set-AzVirtualNetwork
 # Retrieve the correct subnet object
 $subnet = Get-AzVirtualNetworkSubnetConfig -Name $subnetName -VirtualNetwork (Get-AzVirtualNetwork -ResourceGroupName $resourceGroup -Name $vnetName)
 Write-Host "Virtual Network and Subnet Created: $vnetName, $subnetName"
+
+# Step 5: Create Public IP
+$publicIp = New-AzPublicIpAddress -ResourceGroupName $resourceGroup -Location $location -Name $publicIpName -AllocationMethod Static
+Write-Host "Public IP Created: $publicIpName"
