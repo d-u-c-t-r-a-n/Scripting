@@ -38,3 +38,15 @@ Write-Host "Virtual Network and Subnet Created: $vnetName, $subnetName"
 # Step 5: Create Public IP
 $publicIp = New-AzPublicIpAddress -ResourceGroupName $resourceGroup -Location $location -Name $publicIpName -AllocationMethod Static
 Write-Host "Public IP Created: $publicIpName"
+
+# Step 6: Create Network Security Group (NSG) & Add RDP Rule (Fixed)
+$nsg = New-AzNetworkSecurityGroup -ResourceGroupName $resourceGroup -Location $location -Name $nsgName
+
+# Add inbound rule for RDP (TCP 3389)
+$nsg = Add-AzNetworkSecurityRuleConfig -NetworkSecurityGroup $nsg -Name "AllowRDP" -Protocol Tcp `
+    -Direction Inbound -Priority 1000 -SourceAddressPrefix "*" -SourcePortRange "*" `
+    -DestinationAddressPrefix "*" -DestinationPortRange 3389 -Access Allow
+
+# Apply the NSG configuration
+Set-AzNetworkSecurityGroup -NetworkSecurityGroup $nsg
+Write-Host "Network Security Group Created: $nsgName with RDP rule"
