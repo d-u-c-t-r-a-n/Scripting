@@ -50,3 +50,8 @@ $nsg = Add-AzNetworkSecurityRuleConfig -NetworkSecurityGroup $nsg -Name "AllowRD
 # Apply the NSG configuration
 Set-AzNetworkSecurityGroup -NetworkSecurityGroup $nsg
 Write-Host "Network Security Group Created: $nsgName with RDP rule"
+
+# Step 7: Create Network Interface (NIC) (Fixed)
+$nic = New-AzNetworkInterface -ResourceGroupName $resourceGroup -Location $location `
+    -Name $nicName -SubnetId $subnet.Id -PublicIpAddressId $publicIp.Id -NetworkSecurityGroupId $nsg.Id
+Write-Host "Network Interface Created: $nicName"
