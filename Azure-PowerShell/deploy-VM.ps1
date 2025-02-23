@@ -55,3 +55,14 @@ Write-Host "Network Security Group Created: $nsgName with RDP rule"
 $nic = New-AzNetworkInterface -ResourceGroupName $resourceGroup -Location $location `
     -Name $nicName -SubnetId $subnet.Id -PublicIpAddressId $publicIp.Id -NetworkSecurityGroupId $nsg.Id
 Write-Host "Network Interface Created: $nicName"
+
+# Step 8: Configure VM
+$cred = New-Object -TypeName System.Management.Automation.PSCredential `
+    -ArgumentList $adminUsername, (ConvertTo-SecureString -String $adminPassword -AsPlainText -Force)
+
+$vmConfig = New-AzVMConfig -VMName $vmName -VMSize $vmSize | `
+    Set-AzVMOperatingSystem -Windows -ComputerName $vmName -Credential $cred | `
+    Set-AzVMSourceImage -PublisherName $imagePublisher -Offer $imageOffer -Skus $imageSku -Version "latest" | `
+    Add-AzVMNetworkInterface -Id $nic.Id | `
+    Set-AzVMOSDisk -Name $osDiskName -CreateOption FromImage
+Write-Host "VM Configuration Created"
