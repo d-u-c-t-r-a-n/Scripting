@@ -11,3 +11,7 @@ Connect-MgGraph
 
 # Get available MS Graph permissions in the tenant
 (Get-MgContext).Scopes | Format-List * 
+
+# Add member to a group 
+$groupId = "<groupId>"
+$userId = "<userId>"
