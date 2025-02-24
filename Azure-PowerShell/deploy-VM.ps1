@@ -66,3 +66,7 @@ $vmConfig = New-AzVMConfig -VMName $vmName -VMSize $vmSize | `
     Add-AzVMNetworkInterface -Id $nic.Id | `
     Set-AzVMOSDisk -Name $osDiskName -CreateOption FromImage
 Write-Host "VM Configuration Created"
+
+# Step 9: Deploy VM
+New-AzVM -ResourceGroupName $resourceGroup -Location $location -VM $vmConfig
+Write-Host "VM Deployed: $vmName"
