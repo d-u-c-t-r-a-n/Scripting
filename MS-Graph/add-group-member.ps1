@@ -15,3 +15,7 @@ Connect-MgGraph
 # Add member to a group 
 $groupId = "<groupId>"
 $userId = "<userId>"
+
+$params = @{
+"@odata.id" = "https://graph.microsoft.com/v1.0/users/$userId"
+}
